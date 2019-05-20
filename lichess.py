@@ -1,5 +1,7 @@
 import berserk
 import threading
+from chess_engine import is_move, check_legal, commit_move
+import chess
 
 TOKEN = "YedQUsAhQ5I6OeOE"
 
@@ -27,7 +29,8 @@ class Game(threading.Thread):
                 self.handle_chat_line(event)
 
     def handle_state_change(self, game_state):
-        print(game_state['moves'])
+        move = game_state['moves'][-4:]
+        commit_move(board, move)
 
     def handle_chat_line(self, chat_line):
         if chat_line['text'] == "stop":
@@ -35,6 +38,12 @@ class Game(threading.Thread):
 
         if chat_line['text'] == "ajutor":
             client.bots.post_message(self.game_id, 'Acesta este botul pentru tabla de sah. Comanda pentru oprierea meciului este "stop"')
+
+        if not (is_move(chat_line['text']) == False):
+            if(check_legal(board, chat_line['text']) == True):
+                client.bots.make_move(self.game_id, chat_line['text'])
+            elif(check_legal(board, chat_line['text']) == False):
+                client.bots.post_message(self.game_id, "Mutare ilegala")
         pass
 
 
@@ -49,3 +58,4 @@ for event in client.bots.stream_incoming_events():
         #print(event)
         game = Game(client, event['game']['id'])
         game.start()
+        board = chess.Board()
