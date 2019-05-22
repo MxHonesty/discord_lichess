@@ -12,7 +12,6 @@ def is_move(move):
         return False
 
 def check_legal(board, move):
-    print(board.legal_moves)
     if (chess.Move.from_uci(move) in board.legal_moves):
          return True
     else:
@@ -22,7 +21,7 @@ def commit_move(board, move):
     if(check_legal(board, move) == True):
         board.push(chess.Move.from_uci(move))
         return "Move executed"
-    elif(chel_legal(board, move) == False):
+    elif(check_legal(board, move) == False):
         return "Move is not legal"
 
 

@@ -1,4 +1,4 @@
-#!c:\users\stelia~1\desktop\proiecte\lichess\create\scripts\python.exe
+#!c:\users\stelian stoian\desktop\proiecte\lichess\create\scripts\python.exe
 #
 # Very simple serial terminal
 #
