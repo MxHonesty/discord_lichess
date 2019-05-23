@@ -16,6 +16,7 @@ SERIAL_PORT = 'COM3'
 # be sure to set this to the same rate used on the Arduino
 SERIAL_RATE = 9600
 
+ser = serial.Serial(SERIAL_PORT, SERIAL_RATE)
 
 def should_accept(event):
     if(event['challenge']['challenger']['id'] == "honestymx"):
@@ -48,15 +49,14 @@ class Game(threading.Thread):
 
     def read(self):
         wait = True
-        ser = serial.Serial(SERIAL_PORT, SERIAL_RATE)
-        while (wait == True):
-            # using ser.readline() assumes each line contains a single reading
-            # sent using Serial.println() on the Arduino
+        if (wait == True):
             reading = ser.readline().decode('utf-8')
+            print(reading)
             move = reading.replace('m', '')
             move = move.replace(' ', '')
-            client.bots.post_message(self.game_id, move)
-            wait = False
+            if(is_move(move) == False):
+                client.bots.post_message(self.game_id, move)
+                wait = False
 
     def handle_chat_line(self, chat_line):
         if chat_line['text'] == "stop":
@@ -70,6 +70,7 @@ class Game(threading.Thread):
                 client.bots.make_move(self.game_id, chat_line['text'])
             elif(check_legal(board, chat_line['text']) == False):
                 client.bots.post_message(self.game_id, "Mutare ilegala")
+                game.read()
         pass
 
 

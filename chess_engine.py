@@ -7,7 +7,7 @@ import serial
 
 def is_move(move):
     try:
-        chess.Move.from_uci(move)
+        return chess.Move.from_uci(move)
     except:
         return False
 
