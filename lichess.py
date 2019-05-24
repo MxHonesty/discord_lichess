@@ -61,6 +61,7 @@ class Game(threading.Thread):
 
     def send(self, data):
         print("Mutarea citita din functia send " + data)
+        data = "m" + data
         data = data.encode()
         ser.write(data)
         pass
