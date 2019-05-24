@@ -6,20 +6,19 @@ import serial
 
 TOKEN = "YedQUsAhQ5I6OeOE"
 
+#tine cont de cine incepe prima tura
 incepe = 0
 
 session = berserk.TokenSession(TOKEN)
 client = berserk.Client(session)
 
-# this port address is for the serial tx/rx pins on the GPIO header
 SERIAL_PORT = 'COM3'
-# be sure to set this to the same rate used on the Arduino
 SERIAL_RATE = 9600
 
 ser = serial.Serial(SERIAL_PORT, SERIAL_RATE)
 
 def should_accept(event):
-    if(event['challenge']['challenger']['id'] == "honestymx"):
+    if(event['challenge']['challenger']['id'] == "honestytest"):
         return True
 
 class Game(threading.Thread):
@@ -39,11 +38,13 @@ class Game(threading.Thread):
                 self.handle_chat_line(event)
 
     def handle_state_change(self, game_state):
-        print(game_state)
         move = game_state['moves'][-4:]
         commit_move(board, move)
-        self.tura = self.tura+1
+        print(self.tura)
+        if((self.tura%2) == 0):
+            game.send(data = move)
 
+        self.tura = self.tura+1
         if((self.tura%2) == 1):
             game.read()
 
@@ -51,12 +52,18 @@ class Game(threading.Thread):
         wait = True
         if (wait == True):
             reading = ser.readline().decode('utf-8')
-            print(reading)
+            print("Afiseza mutarea citita prin serial " + reading)
             move = reading.replace('m', '')
             move = move.replace(' ', '')
             if(is_move(move) == False):
                 client.bots.post_message(self.game_id, move)
                 wait = False
+
+    def send(self, data):
+        print("Mutarea citita din functia send " + data)
+        data = data.encode()
+        ser.write(data)
+        pass
 
     def handle_chat_line(self, chat_line):
         if chat_line['text'] == "stop":

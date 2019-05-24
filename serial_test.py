@@ -7,9 +7,10 @@ SERIAL_PORT = 'COM3'
 # be sure to set this to the same rate used on the Arduino
 SERIAL_RATE = 9600
 
+ser = serial.Serial(SERIAL_PORT, SERIAL_RATE)
+
 def read():
     wait = True
-    ser = serial.Serial(SERIAL_PORT, SERIAL_RATE)
     while (wait == True):
         # using ser.readline() assumes each line contains a single reading
         # sent using Serial.println() on the Arduino
@@ -21,5 +22,8 @@ def read():
             print('da')
             wait = False
 
+def send(data):
+    ser.write(data)
+
 if __name__ == "__main__":
-    read()
+    send("a mers boss")
