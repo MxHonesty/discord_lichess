@@ -12,13 +12,13 @@ incepe = 0
 session = berserk.TokenSession(TOKEN)
 client = berserk.Client(session)
 
-SERIAL_PORT = 'COM3'
+SERIAL_PORT = 'COM4'
 SERIAL_RATE = 9600
 
 ser = serial.Serial(SERIAL_PORT, SERIAL_RATE)
 
 def should_accept(event):
-    if(event['challenge']['challenger']['id'] == "honestytest"):
+    #if(event['challenge']['challenger']['id'] == "honestytest"):
         return True
 
 class Game(threading.Thread):

@@ -3,7 +3,7 @@ from chess_engine import is_move
 
 
 # this port address is for the serial tx/rx pins on the GPIO header
-SERIAL_PORT = 'COM3'
+SERIAL_PORT = 'COM4'
 # be sure to set this to the same rate used on the Arduino
 SERIAL_RATE = 9600
 
@@ -22,8 +22,13 @@ def read():
             print('da')
             wait = False
 
+#def send(data):
+    #ser.write(data)
+
 def send(data):
+    data = data.encode()
     ser.write(data)
+    pass
 
 if __name__ == "__main__":
-    send("a mers boss")
+    send("ma8h1")
