@@ -44,4 +44,4 @@ async def on_message(message):
         except:
             await message.channel.send('Nume invalid')
 
-client.run('NzM5OTYwNjI4NTU4NTYxMzM0.XyiECQ._NE5jDfQeNJcK5OiSQMlZQfNY0s')
+client.run(TOKEN)
