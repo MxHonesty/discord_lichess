@@ -1,5 +1,6 @@
 import discord
 from li import getBlitzRating, getClassicRating, getRapidRating, getBulletRating
+from secret import TOKEN
 
 client = discord.Client()
 
