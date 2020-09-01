@@ -2,7 +2,7 @@ from li import getBlitzRating, getClassicRating, getRapidRating, getBulletRating
 
 async def command(message):
     if message.content.startswith('$blitz'):        #blitz
-        nume = message.content[8:]
+        nume = message.content[7:]
         nume.replace(" ", "")
         try:
             val = getBlitzRating(nume)

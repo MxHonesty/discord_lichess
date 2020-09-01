@@ -14,7 +14,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    #await command(message) #detecteaza comanda si trimite mesajul
+    await command(message) #detecteaza comanda si trimite mesajul
 
 
 if __name__ == '__main__':
