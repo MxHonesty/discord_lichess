@@ -1,5 +1,5 @@
 from sanic import Sanic
-from sanic.response import json, text
+from sanic.response import json, text, html
 from sanic.log import logger
 
 import bot
@@ -15,8 +15,8 @@ async def test(request):
 
 @app.route('/test')
 async def salut(request):
-    logger.info('Test')
-    return json({'nume' : bot.client.user})
+    logger.info('-------------------------Test-------------------------')
+    return html('Nume bot: ' + bot.get_client_name())
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port = 8000, debug = True)
+    app.run(host = '0.0.0.0', port = 8000, debug = False)
