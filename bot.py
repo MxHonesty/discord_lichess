@@ -41,9 +41,23 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+    elif message.content.startswith("$ping"):
+        await send_message_to_channel(message.channel, 'Salut!')
+    elif message.content.startswith('$list'):
+        get_servers()
     else:
         await command(message) #detecteaza comanda si trimite mesajul
 
 
 def get_client_name():
     return client.user.name
+
+async def send_message_to_channel(canal, mesaj):
+    await canal.send(mesaj)
+
+def get_servers(prn = 0):
+    list = client.guilds
+    if prn == 1:
+        for serv in list:
+            print(serv.name)
+    return list
